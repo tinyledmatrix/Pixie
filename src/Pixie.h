@@ -59,9 +59,11 @@ class Pixie{
 	void write(uint16_t input, uint8_t pos = 0);
 	void write(int32_t  input, uint8_t pos = 0);
 	void write(uint32_t input, uint8_t pos = 0);
-	#if defined(ESP8266) || defined(ESP32)
+	/*
+	#elif defined(ESP8266) || defined(ESP32)
 		void write(long unsigned int input, uint8_t pos = 0); // same as uint32_t, but Arduino is stupid
 	#endif
+	*/
 	void write(float  input, uint8_t places = 2, uint8_t pos = 0);
 	void write(double input, uint8_t places = 2, uint8_t pos = 0);
 	void write(uint8_t* icon, uint8_t pos = 0);
@@ -75,9 +77,9 @@ class Pixie{
 	void print(uint16_t input);
 	void print(int32_t  input);
 	void print(uint32_t input);
-	#if defined(ESP8266) || defined(ESP32)
-		void print(long unsigned int input); // same as uint32_t, but Arduino is stupid
-	#endif
+	// #if defined(ESP8266) || defined(ESP32)
+	//	void print(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	//#endif
 	void print(float  input, uint8_t places = 2);
 	void print(double input, uint8_t places = 2);
 	void print(uint8_t* icon);
@@ -93,9 +95,9 @@ class Pixie{
 	void push(uint16_t input);
 	void push(int32_t  input);
 	void push(uint32_t input);
-	#if defined(ESP8266) || defined(ESP32)
-		void push(long unsigned int input); // same as uint32_t, but Arduino is stupid
-	#endif
+	// #if (defined(ESP8266) || defined(ESP32)) && !defined(ESP32C3)
+	//	void push(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	//#endif
 	void push(float  input, uint8_t places = 2);
 	void push(double input, uint8_t places = 2);
 	void push(uint8_t* icon);
@@ -109,9 +111,9 @@ class Pixie{
 	void shift(uint16_t input);
 	void shift(int32_t  input);
 	void shift(uint32_t input);
-	#if defined(ESP8266) || defined(ESP32)
-		void shift(long unsigned int input); // same as uint32_t, but Arduino is stupid
-	#endif
+	// #if (defined(ESP8266) || defined(ESP32)) && !defined(ESP32C3)
+	//	void shift(long unsigned int input); // same as uint32_t, but Arduino is stupid
+	//#endif
 	void shift(float  input, uint8_t places = 2);
 	void shift(double input, uint8_t places = 2);
 	void shift(uint8_t* icon);
@@ -120,9 +122,9 @@ class Pixie{
 	void draw_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 	
 	uint8_t get_length(uint32_t input);
-	#if defined(ESP8266) || defined(ESP32)
-		uint8_t get_length(long unsigned int input);
-	#endif
+	// #if (defined(ESP8266) || defined(ESP32)) && !defined(ESP32C3)
+	//	uint8_t get_length(long unsigned int input);
+	//#endif
 	uint8_t get_length(int32_t input);
 	uint8_t get_length(float input, uint8_t places);
 		

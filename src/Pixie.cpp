@@ -126,7 +126,8 @@ void Pixie::show(bool fill_com){
 				#endif
 				
 				#ifdef ESP32
-					GPIO.out_w1ts = ((uint32_t)1 << DAT_pin);
+					//GPIO.out_w1ts = ((uint32_t)1 << DAT_pin);
+					REG_WRITE(GPIO_OUT_W1TS_REG, ((uint32_t)1 << DAT_pin) );
 				#endif
 				
 				#ifdef SAMD_SERIES
@@ -143,7 +144,8 @@ void Pixie::show(bool fill_com){
 				#endif
 				
 				#ifdef ESP32
-					GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+					//GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+					REG_WRITE(GPIO_OUT_W1TC_REG,((uint32_t)1 << DAT_pin));
 				#endif
 				
 				#ifdef SAMD_SERIES
@@ -159,7 +161,8 @@ void Pixie::show(bool fill_com){
 				GPOS = (1 << CLK_pin);
 			#endif
 			#ifdef ESP32
-				GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+				//GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+				REG_WRITE(GPIO_OUT_W1TS_REG, ((uint32_t)1 << CLK_pin));
 			#endif
 			#ifdef SAMD_SERIES
 				PORT->Group[port_clk].OUTSET.reg = pinMask_clk;
@@ -175,7 +178,8 @@ void Pixie::show(bool fill_com){
 				ESP.wdtFeed();
 			#endif
 			#ifdef ESP32
-				GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+				//GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+				REG_WRITE(GPIO_OUT_W1TC_REG, ((uint32_t)1 << CLK_pin));
 			#endif
 			#ifdef SAMD_SERIES
 				PORT->Group[port_clk].OUTCLR.reg = pinMask_clk;
@@ -192,7 +196,8 @@ void Pixie::show(bool fill_com){
 		GPOC = (1 << DAT_pin);
 	#endif
 	#ifdef ESP32
-		GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+		//GPIO.out_w1tc = ((uint32_t)1 << DAT_pin);
+		REG_WRITE(GPIO_OUT_W1TC_REG, ((uint32_t)1 << DAT_pin));
 	#endif
 	#ifdef SAMD_SERIES
 		PORT->Group[port_dat].OUTCLR.reg = pinMask_dat;
@@ -380,13 +385,13 @@ void Pixie::write(uint32_t input, uint8_t pos){
 	@param	pos     Position in the chain to start writing
 */
 /**************************************************************************/
-#if defined(ESP8266) || defined(ESP32)
+/*#if defined(ESP8266) || defined(ESP32)
 	void Pixie::write(long unsigned int input, uint8_t pos){
 		char char_buf[48];
 		ultoa(input,char_buf,10);
 		write(char_buf, pos);
 	}
-#endif
+#endif*/
 
 /**************************************************************************/
 /*!
@@ -610,7 +615,7 @@ void Pixie::print(uint32_t input){
 	write(char_buf, pos);
 }
 
-#if defined(ESP8266) || defined(ESP32)
+/*#if defined(ESP8266) || defined(ESP32)
 	void Pixie::print(long unsigned int input){
 		uint8_t pos = cursor_pos;
 		cursor_pos++;
@@ -619,7 +624,7 @@ void Pixie::print(uint32_t input){
 		write(char_buf, pos);
 	}
 #endif
-
+*/
 void Pixie::print(char input){
 	print_char(input);
 }
@@ -847,7 +852,7 @@ void Pixie::push(uint32_t input){
 		push_char(char_buf[i]);
 	}
 }
-
+/*
 #if defined(ESP8266) || defined(ESP32)
 	void Pixie::push(long unsigned int input){
 		char char_buf[48];
@@ -860,7 +865,7 @@ void Pixie::push(uint32_t input){
 		}
 	}
 #endif
-
+*/
 void Pixie::push(char input){
 	push_char(input);
 }
@@ -1025,7 +1030,7 @@ void Pixie::shift(uint32_t input){
 		shift_char(char_buf[len-1-i]);
 	}
 }
-
+/*
 #if defined(ESP8266) || defined(ESP32)
 	void Pixie::shift(long unsigned int input){
 		const uint8_t len = get_length(input);
@@ -1036,7 +1041,7 @@ void Pixie::shift(uint32_t input){
 		}
 	}
 #endif
-
+*/
 void Pixie::shift(char input){
 	shift_char(input);
 }
@@ -1263,7 +1268,7 @@ uint8_t Pixie::get_length(uint32_t input){
 	}
 	return places;
 }
-
+/*
 #if defined(ESP8266) || defined(ESP32)
 	uint8_t Pixie::get_length(long unsigned int input){
 		if(input == 0){
@@ -1277,7 +1282,7 @@ uint8_t Pixie::get_length(uint32_t input){
 		return places;
 	}
 #endif
-
+*/
 void Pixie::scroll(char* input){
 	scroll_message(input,150,true);
 }
@@ -1502,7 +1507,8 @@ void Pixie::reset() {
 		GPOS = (1 << CLK_pin);
 	#endif
 	#ifdef ESP32
-		GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+		//GPIO.out_w1ts = ((uint32_t)1 << CLK_pin);
+		REG_WRITE(GPIO_OUT_W1TS_REG, ((uint32_t)1 << CLK_pin));
 	#endif
 	#if !defined(ESP8266) && !defined(ESP32)
 		digitalWrite(CLK_pin, HIGH);
@@ -1512,7 +1518,8 @@ void Pixie::reset() {
 		GPOC = (1 << CLK_pin);
 	#endif
 	#ifdef ESP32
-		GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+		//GPIO.out_w1tc = ((uint32_t)1 << CLK_pin);
+		REG_WRITE(GPIO_OUT_W1TC_REG, ((uint32_t)1 << CLK_pin));
 	#endif
 	#if !defined(ESP8266) && !defined(ESP32)
 		digitalWrite(CLK_pin, LOW);
